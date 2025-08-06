@@ -1,0 +1,39 @@
+# IP Address Mapping for Coder Workspaces
+# Format: username:ip_address
+# Each user gets a static IP in the 172.20.0.x range
+
+# Development Team
+user1:172.20.0.11
+user2:172.20.0.12
+user3:172.20.0.13
+user4:172.20.0.14
+user5:172.20.0.15
+
+# QA Team  
+qa1:172.20.0.21
+qa2:172.20.0.22
+qa3:172.20.0.23
+
+# DevOps Team
+devops1:172.20.0.31
+devops2:172.20.0.32
+
+# Data Team
+data1:172.20.0.41
+data2:172.20.0.42
+
+# Product Team
+product1:172.20.0.51
+product2:172.20.0.52
+
+# Admins
+admin:172.20.0.10
+root:172.20.0.9
+
+# Demo/Guest Users
+demo:172.20.0.100
+guest1:172.20.0.101
+guest2:172.20.0.102
+
+# Reserved for future use
+# Range 172.20.0.200-254 available for expansion

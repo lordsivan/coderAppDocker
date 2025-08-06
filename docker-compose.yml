@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  coder-workspace:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: coder-workspace-${USER:-default}
+    hostname: coder-${USER:-default}
+    environment:
+      - CODER_USERNAME=${USER:-default}
+      - CODER_ACCESS_TOKEN=${CODER_ACCESS_TOKEN}
+      - CODER_URL=${CODER_URL:-http://localhost:7080}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - coder-data:/home/coder
+      - ./ip-map.txt:/etc/ip-map.txt:ro
+    networks:
+      - default
+    depends_on:
+      - network-setup
+    restart: unless-stopped
+    labels:
+      - "coder.workspace=true"
+      - "coder.user=${USER:-default}"
+
+  # Helper service to ensure network exists
+  network-setup:
+    image: docker:latest
+    container_name: coder-network-setup
+    command: >
+      sh -c "
+        docker network inspect coder_net >/dev/null 2>&1 || 
+        docker network create --driver bridge --subnet=172.20.0.0/16 coder_net
+        echo 'Network setup complete'
+      "
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: "no"
+
+networks:
+  default:
+    external: true
+    name: coder_net
+
+volumes:
+  coder-data:
+    driver: local
