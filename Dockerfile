@@ -2,14 +2,15 @@ FROM ghcr.io/coder/coder:latest
 
 # Install Docker CLI and necessary tools
 USER root
-RUN apt-get update && \
-    apt-get install -y \
-    docker.io \
+RUN apk update && \
+    apk add --no-cache \
+    docker \
+    docker-cli \
     curl \
     jq \
     iproute2 \
     net-tools \
-    && rm -rf /var/lib/apt/lists/*
+    bash
 
 # Copy configuration files
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
